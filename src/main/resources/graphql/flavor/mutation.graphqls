@@ -1,0 +1,6 @@
+extend type Mutation {
+    createFlavor(input: FlavorCreateInput!): Flavor!
+    updateFlavor(id: ID!, input: FlavorUpdateInput!): Flavor!
+    deleteFlavor(id: ID!): ID!
+    undeleteFlavor(id: ID): Flavor!
+}

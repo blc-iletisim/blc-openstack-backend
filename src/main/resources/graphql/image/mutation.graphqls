@@ -1,0 +1,6 @@
+extend type Mutation {
+    createImage(input: ImageCreateInput!): Image!
+    updateImage(id: ID!, input: ImageUpdateInput!): Image!
+    deleteImage(id: ID!): ID!
+    undeleteImage(id: ID): Image!
+}

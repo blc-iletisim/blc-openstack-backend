@@ -1,0 +1,7 @@
+input ImageCreateInput {
+    name:String!
+}
+
+input ImageUpdateInput {
+    name:String!
+}

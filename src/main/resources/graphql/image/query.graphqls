@@ -1,0 +1,5 @@
+extend type Query{
+    image(id: ID!): Image!
+    images(criteria: ImageCriteria, sortBy: [SortBy!]): [Image!]
+    paginateImages(pagination : Pagination!, criteria: ImageCriteria, sortBy:[SortBy!] ) : ImagePageable!
+}

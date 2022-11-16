@@ -1,0 +1,14 @@
+input FlavorCreateInput {
+    name:String!,
+    cpu_size:Int!,
+    ram_size:Int!,
+    root_disk:Int!
+}
+
+input FlavorUpdateInput {
+    name:String!,
+    cpu_size:Int!,
+    ram_size:Int!,
+    root_disk:Int!
+    
+}

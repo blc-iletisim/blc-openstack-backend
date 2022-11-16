@@ -1,0 +1,7 @@
+type Image{
+    id:ID!,
+    name:String!,
+    createdDateTime:LocalDateTime,
+    updatedDateTime:LocalDateTime,
+    deletedDateTime: LocalDateTime
+}

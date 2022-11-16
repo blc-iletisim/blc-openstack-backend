@@ -1,0 +1,4 @@
+type ImagePageable{
+    pageInfo: PageInfo!
+    content: [Image!]
+}

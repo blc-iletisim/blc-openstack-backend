@@ -1,0 +1,17 @@
+type JwtResponse{
+    id:ID!,
+    accessToken:String!,
+    refreshToken:String!,
+    type: String!,
+    role:String!,
+    email:String!,
+    user: User!,
+    description :String!,
+    deletedDateTime: LocalDateTime
+}
+type TokenRefreshResponse{
+    id:ID!,
+    accessToken:String!,
+    refreshToken:String!,
+    deletedDateTime: LocalDateTime
+}

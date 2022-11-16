@@ -1,0 +1,10 @@
+type Flavor{
+    id:ID!,
+    name:String!,
+    cpu_size:Int!,
+    ram_size:Int!,
+    root_disk:Int!,
+    createdDateTime:LocalDateTime,
+    updatedDateTime:LocalDateTime,
+    deletedDateTime: LocalDateTime
+}

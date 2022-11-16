@@ -1,0 +1,4 @@
+type PemPageable{
+    pageInfo: PageInfo!
+    content: [Pem!]
+}

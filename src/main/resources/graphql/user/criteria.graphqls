@@ -1,0 +1,6 @@
+input UserCriteria{
+    name:String,
+    email:String,
+
+
+}

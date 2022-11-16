@@ -1,0 +1,10 @@
+input CategoryCreateInput {
+    name:String!,
+    instance:ID!
+}
+
+input CategoryUpdateInput {
+    name:String!,
+    instance:ID!
+
+}

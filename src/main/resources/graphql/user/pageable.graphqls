@@ -1,0 +1,4 @@
+type UserPageable{
+    pageInfo: PageInfo!
+    content: [User!]
+}

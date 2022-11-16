@@ -1,0 +1,9 @@
+input PemCreateInput {
+    name:String!,
+    pem_url:String!
+}
+
+input PemUpdateInput {
+    name:String!,
+    pem_url:String!
+}

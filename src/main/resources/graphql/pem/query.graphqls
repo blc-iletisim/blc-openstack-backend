@@ -1,0 +1,5 @@
+extend type Query{
+    pem(id: ID!): Pem!
+    pems(criteria: PemCriteria, sortBy: [SortBy!]): [Pem!]
+    paginatePems(pagination : Pagination!, criteria: PemCriteria, sortBy:[SortBy!] ) : PemPageable!
+}

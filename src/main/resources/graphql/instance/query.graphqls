@@ -1,0 +1,5 @@
+extend type Query {
+    instance(id: ID!): Instance!,
+    instances(criteria: InstanceCriteria, sortBy: [SortBy!]): [Instance!],
+    paginateInstances(pagination : Pagination!, criteria: InstanceCriteria, sortBy:[SortBy!] ) : InstancePageable!
+}

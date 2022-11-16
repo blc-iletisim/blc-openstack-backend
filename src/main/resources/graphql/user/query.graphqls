@@ -1,0 +1,5 @@
+extend type Query{
+    user(id: ID!): User!
+    users(criteria: UserCriteria, sortBy: [SortBy!]): [User!]
+    paginateUsers(pagination : Pagination!, criteria: UserCriteria, sortBy:[SortBy!] ) : UserPageable!
+}

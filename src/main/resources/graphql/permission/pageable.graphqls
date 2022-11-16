@@ -1,0 +1,4 @@
+type PermissionPageable{
+    pageInfo: PageInfo!
+    content: [Permission!]
+}

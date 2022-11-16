@@ -1,0 +1,13 @@
+input SortBy {
+    direction: Direction!
+    field: String!
+}
+
+input Pagination {
+    page: Int!
+    rowsPerPage: Int!
+}
+
+enum Direction {
+    ASC, DESC
+}

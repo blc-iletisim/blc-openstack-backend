@@ -1,0 +1,8 @@
+input RoleCreateInput {
+    name:String!,
+
+}
+
+input RoleUpdateInput {
+    name:String!,
+}

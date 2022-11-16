@@ -1,0 +1,7 @@
+type PageInfo {
+    totalElements: Int!
+    totalPages: Int!
+    numberOfElements: Int!
+    pageNumber: Int!
+    pageSize: Int!
+}

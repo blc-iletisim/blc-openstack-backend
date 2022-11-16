@@ -1,0 +1,8 @@
+type Permission{
+    id:ID!,
+    name:String!,
+    roles:[Role!],
+    createdDateTime:LocalDateTime,
+    updatedDateTime:LocalDateTime,
+    deletedDateTime: LocalDateTime
+}

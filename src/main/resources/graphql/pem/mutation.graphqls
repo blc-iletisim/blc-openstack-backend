@@ -1,0 +1,6 @@
+extend type Mutation {
+    createPem(input: PemCreateInput!): Pem!
+    updatePem(id: ID!, input: PemUpdateInput!): Pem!
+    deletePem(id: ID!): ID!
+    undeletePem(id: ID): Pem!
+}

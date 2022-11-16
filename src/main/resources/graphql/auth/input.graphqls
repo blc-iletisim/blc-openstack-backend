@@ -1,0 +1,9 @@
+input AuthLoginInput {
+    email:String!,
+    password:String!
+
+}
+input TokenRefreshRequest {
+   refreshToken:String!
+}
+

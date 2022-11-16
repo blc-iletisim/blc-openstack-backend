@@ -1,0 +1,5 @@
+extend type Query{
+    permission(id: ID!): Permission
+    permissions(criteria: PermissionCriteria, sortBy: [SortBy!]): [Permission!]
+    paginatePermissions(pagination : Pagination!, criteria: PermissionCriteria, sortBy:[SortBy!] ) : PermissionPageable!
+}

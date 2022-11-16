@@ -1,0 +1,9 @@
+type Role{
+    id:ID!,
+    name:String!,
+    permissions:[Permission!],
+    users:[User!],
+    createdDateTime:LocalDateTime,
+    updatedDateTime:LocalDateTime,
+    deletedDateTime: LocalDateTime
+}

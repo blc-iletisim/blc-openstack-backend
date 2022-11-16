@@ -1,0 +1,5 @@
+extend type Query{
+    role(id: ID!): Role
+    roles(criteria: RoleCriteria, sortBy: [SortBy!]): [Role!]
+    paginateRoles(pagination : Pagination!, criteria: RoleCriteria, sortBy:[SortBy!] ) : RolePageable!
+}

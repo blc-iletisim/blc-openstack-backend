@@ -1,0 +1,4 @@
+type InstancePageable{
+    pageInfo: PageInfo!
+    content: [Instance!]
+}

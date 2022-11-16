@@ -1,0 +1,6 @@
+extend type Mutation {
+    createRole(input: RoleCreateInput!): Role!
+    updateRole(id: ID!, input: RoleUpdateInput!): Role!
+    deleteRole(id: ID!): ID!
+    undeleteRole(id: ID): Role!
+}

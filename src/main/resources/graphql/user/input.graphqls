@@ -1,0 +1,17 @@
+input UserCreateInput {
+    name:String!,
+    email:String!,
+    password:String!,
+    role:ID!,
+    company:String!
+
+}
+
+input UserUpdateInput {
+    name:String,
+    email:String,
+    password:String,
+    role:ID,
+    company:String
+
+}

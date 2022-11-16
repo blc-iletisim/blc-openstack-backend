@@ -1,0 +1,4 @@
+input CategoryCriteria{
+    name:String!
+
+}

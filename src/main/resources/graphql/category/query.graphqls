@@ -1,0 +1,5 @@
+extend type Query{
+    category(id: ID!): Category!
+    categories(criteria: CategoryCriteria, sortBy: [SortBy!]): [Category!]
+    paginateCategories(pagination : Pagination!, criteria: CategoryCriteria, sortBy:[SortBy!] ) : CategoryPageable!
+}
