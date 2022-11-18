@@ -1,5 +1,6 @@
 package com.blc.customerInterface.graphql.role.mutation;
 
+import com.blc.customerInterface.graphql.permission.domain.PermissionName;
 import com.blc.customerInterface.graphql.role.domain.Role;
 import com.blc.customerInterface.graphql.role.mutation.input.RoleCreateInput;
 import com.blc.customerInterface.graphql.role.mutation.input.RoleUpdateInput;
@@ -25,16 +26,19 @@ public class RoleMutation implements GraphQLMutationResolver {
         this.roleService = roleService;
         this.roleMapper = roleMapper;
     }
+    @PreAuthorize("hasAuthority('"+ PermissionName.ROLE_CREATE +"')")
     public Role createRole(@Valid RoleCreateInput input){
         return roleService.save(roleMapper.toEntity(input));
     }
-
+    @PreAuthorize("hasAuthority('"+ PermissionName.ROLE_UPDATE +"')")
     public Role updateRole(UUID id, @Valid RoleUpdateInput input){
         return roleService.findById(id).map(role -> roleService.update(roleMapper.updateEntity(role,input))).orElseThrow(RuntimeException::new);
     }
+    @PreAuthorize("hasAuthority('"+ PermissionName.ROLE_DELETE +"')")
     public UUID deleteRole(UUID id){
         return roleService.findById(id).map(roleService::delete).orElseThrow(RuntimeException::new);
     }
+    @PreAuthorize("hasAuthority('"+ PermissionName.ROLE_UNDELETE +"')")
     public Role undeleteRole(UUID id){
         return roleService.findById(id).map(roleService::undelete).orElseThrow(RuntimeException::new);
     }

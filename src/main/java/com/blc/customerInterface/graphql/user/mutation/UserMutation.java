@@ -1,7 +1,5 @@
 package com.blc.customerInterface.graphql.user.mutation;
 
-import com.blc.customerInterface.configuration.PermissionConfig;
-import com.blc.customerInterface.graphql.permission.domain.Permission;
 import com.blc.customerInterface.graphql.permission.domain.PermissionName;
 import com.blc.customerInterface.graphql.user.domain.User;
 import com.blc.customerInterface.graphql.user.mutation.input.UserCreateInput;

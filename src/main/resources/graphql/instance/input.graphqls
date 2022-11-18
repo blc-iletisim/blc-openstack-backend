@@ -3,16 +3,12 @@ input InstanceCreateInput {
     pem:PemCreateInput,
     flavor:ID!,
     image:ID,
-    user:ID,
     categories:[ID]
 
 }
 input InstanceUpdateInput {
     name:String,
-    pem:PemUpdateInput,
     flavor:ID!,
-    image:ID,
-    user:ID,
     categories:[ID]
 
 }

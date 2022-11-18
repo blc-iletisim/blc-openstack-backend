@@ -53,7 +53,6 @@ public class Instance extends BaseDomain {
     public User getUser() {
         return user;
     }
-
     public void setUser(User user) {
         this.user = user;
     }
@@ -67,7 +66,7 @@ public class Instance extends BaseDomain {
         this.image = image;
     }
 
-    @OneToMany(mappedBy = "instance",fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     public Collection<Category> getCategories() {
         return categories;
     }

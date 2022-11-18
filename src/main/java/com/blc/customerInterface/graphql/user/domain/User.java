@@ -3,10 +3,12 @@ package com.blc.customerInterface.graphql.user.domain;
 import com.blc.customerInterface.graphql.instance.domain.Instance;
 import com.blc.customerInterface.graphql.role.domain.Role;
 import com.blc.customerInterface.lib.dao.domain.BaseDomain;
+import org.w3c.dom.stylesheets.LinkStyle;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name = "user")
@@ -17,7 +19,7 @@ public class User extends BaseDomain {
     private String password;
     private String company;
     private Role role;
-    private Collection<Instance> instances= new ArrayList<>();
+    private List<Instance> instances= new ArrayList<>();
 
     @Column(nullable = false)
     public String getName() {
@@ -27,6 +29,8 @@ public class User extends BaseDomain {
     public void setName(String name) {
         this.name = name;
     }
+
+
     @Column(nullable = false)
     public String getEmail() {
         return email;
@@ -63,12 +67,12 @@ public class User extends BaseDomain {
         this.role = role;
     }
 
-    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
-    public Collection<Instance> getInstances() {
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "user")
+    public List<Instance> getInstances() {
         return instances;
     }
 
-    public void setInstances(Collection<Instance> instances) {
+    public void setInstances(List<Instance> instances) {
         this.instances = instances;
     }
 }

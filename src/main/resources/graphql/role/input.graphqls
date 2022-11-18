@@ -1,8 +1,10 @@
 input RoleCreateInput {
     name:String!,
+    permissions:[ID]
 
 }
 
 input RoleUpdateInput {
     name:String!,
+    permissions:[ID]
 }
