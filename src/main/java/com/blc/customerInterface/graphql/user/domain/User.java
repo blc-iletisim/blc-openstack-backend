@@ -3,12 +3,14 @@ package com.blc.customerInterface.graphql.user.domain;
 import com.blc.customerInterface.graphql.instance.domain.Instance;
 import com.blc.customerInterface.graphql.role.domain.Role;
 import com.blc.customerInterface.lib.dao.domain.BaseDomain;
-import org.w3c.dom.stylesheets.LinkStyle;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
+
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
+
 
 @Entity
 @Table(name = "user")
@@ -29,7 +31,6 @@ public class User extends BaseDomain {
     public void setName(String name) {
         this.name = name;
     }
-
 
     @Column(nullable = false)
     public String getEmail() {
@@ -67,7 +68,8 @@ public class User extends BaseDomain {
         this.role = role;
     }
 
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "user")
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    @LazyCollection(LazyCollectionOption.FALSE)
     public List<Instance> getInstances() {
         return instances;
     }

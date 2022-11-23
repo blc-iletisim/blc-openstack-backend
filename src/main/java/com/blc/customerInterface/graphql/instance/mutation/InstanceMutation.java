@@ -30,7 +30,7 @@ public class InstanceMutation implements GraphQLMutationResolver {
     }
 
     @PreAuthorize("hasAuthority('"+ PermissionName.INSTANCE_CREATE +"')")
-    public Instance createInstance(@Valid InstanceCreateInput input, DataFetchingEnvironment environment) throws Throwable{
+    public Instance createInstance(InstanceCreateInput input, DataFetchingEnvironment environment) throws Throwable{
         UUID userId = UUID.fromString(JwtTokenProvider.getAttribute(environment,"userId"));
         input.setUser(userId);
         return instanceService.save(instanceMapper.toEntity(input));

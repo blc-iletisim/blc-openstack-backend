@@ -20,6 +20,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.function.Supplier;
 
 @Component
@@ -78,7 +79,7 @@ public class InstanceMapper extends BaseCreateUpdateMapper<Instance, InstanceCre
         });
         entity.setImage(image);
 
-        Collection<Category> categories = new ArrayList<>();
+        List<Category> categories = new ArrayList<>();
         for (int i=0; i<input.getCategories().size(); i++){
             Category category = categoryService.findById(input.getCategories().get(i)).orElseThrow(new Supplier<Throwable>() {
                 @Override

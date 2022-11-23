@@ -14,6 +14,8 @@ import java.util.UUID;
 @MappedSuperclass
 public abstract class BaseDomain implements Serializable {
 
+    //private static final long serialVersionUID = 1L;
+
     private UUID id;
     private LocalDateTime createdDateTime;
     private LocalDateTime updatedDateTime;

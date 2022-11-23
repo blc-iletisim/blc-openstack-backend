@@ -17,6 +17,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -179,12 +180,15 @@ public class CustomerInterfaceApplication implements CommandLineRunner {
 
 		Role roleAdmin = new Role();
 		roleAdmin.setName("ADMIN");
-		Set<Permission> permissionsAdmin = new HashSet<>();
+
+		List<Permission> permissionsAdmin = new ArrayList<>();
 		for (int i=0;i<permissionService.findAll().size();i++){
 			permissionsAdmin.add(permissionService.findAll().get(i));
 		}
 		roleAdmin.setPermissions(permissionsAdmin);
 		roleService.save(roleAdmin);
+
+
 
 		Role roleUser = new Role();
 		roleUser.setName("USER");
@@ -194,7 +198,7 @@ public class CustomerInterfaceApplication implements CommandLineRunner {
 		Permission instance_delete = permissionRepo.findByName(PermissionName.INSTANCE_DELETE);
 		Permission instance_undelete = permissionRepo.findByName(PermissionName.INSTANCE_UNDELETE);
 
-		Set<Permission> permissionsUser = new HashSet<>();
+		List<Permission> permissionsUser = new ArrayList<>();
 		permissionsUser.addAll(List.of(instance_create,instance_update,instance_delete,instance_undelete));
 		roleUser.setPermissions(permissionsUser);
 		roleService.save(roleUser);

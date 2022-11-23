@@ -5,7 +5,9 @@ import com.blc.customerInterface.lib.dao.domain.BaseDomain;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -14,14 +16,14 @@ public class Permission extends BaseDomain implements GrantedAuthority {
 
     private String name;
 
-    private Set<Role> roles = new HashSet<>();
+    private List<Role> roles = new ArrayList<>();
 
     @ManyToMany(mappedBy = "permissions",fetch = FetchType.EAGER)
-    public Set<Role> getRoles() {
+    public List<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(Set<Role> roles) {
+    public void setRoles(List<Role> roles) {
         this.roles = roles;
     }
 

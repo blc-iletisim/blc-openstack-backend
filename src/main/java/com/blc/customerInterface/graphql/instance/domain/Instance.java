@@ -14,7 +14,7 @@ import java.util.Collection;
 @Entity
 @Table(name = "instance")
 public class Instance extends BaseDomain {
-
+    //private static final long serialVersionUID = 1L;
     private String name;
     private Pem pem;
     private Flavor flavor;
@@ -53,6 +53,7 @@ public class Instance extends BaseDomain {
     public User getUser() {
         return user;
     }
+
     public void setUser(User user) {
         this.user = user;
     }
@@ -66,7 +67,7 @@ public class Instance extends BaseDomain {
         this.image = image;
     }
 
-    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "instance")
     public Collection<Category> getCategories() {
         return categories;
     }

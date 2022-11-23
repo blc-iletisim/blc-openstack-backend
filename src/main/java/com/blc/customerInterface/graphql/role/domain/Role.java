@@ -3,21 +3,20 @@ package com.blc.customerInterface.graphql.role.domain;
 import com.blc.customerInterface.graphql.permission.domain.Permission;
 import com.blc.customerInterface.graphql.user.domain.User;
 import com.blc.customerInterface.lib.dao.domain.BaseDomain;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "role")
 public class Role extends BaseDomain {
 
     private String name;
-    private Set<Permission> permissions = new HashSet<>();
-    private Collection<User> users = new ArrayList<>();
+    private List<Permission> permissions = new ArrayList<>();
+    private List<User> users = new ArrayList<>();
 
     @Column(nullable = false)
     public String getName() {
@@ -28,21 +27,22 @@ public class Role extends BaseDomain {
         this.name = name;
     }
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    public Set<Permission> getPermissions() {
+    @ManyToMany
+    @LazyCollection(LazyCollectionOption.FALSE)
+    public List<Permission> getPermissions() {
         return permissions;
     }
 
-    public void setPermissions(Set<Permission> permissions) {
+    public void setPermissions(List<Permission> permissions) {
         this.permissions = permissions;
     }
 
-    @OneToMany(mappedBy = "role",fetch = FetchType.EAGER)
-    public Collection<User> getUsers() {
+    @OneToMany(mappedBy = "role",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    public List<User> getUsers() {
         return users;
     }
 
-    public void setUsers(Collection<User> users) {
+    public void setUsers(List<User> users) {
         this.users = users;
     }
 

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserService extends BaseService<User, UserRepo, UserCriteria, UserCriteriaSpec> {
+
     @Autowired
     public UserService(UserRepo repository, UserCriteriaSpec criteriaSpec) {
         super(repository, criteriaSpec);
