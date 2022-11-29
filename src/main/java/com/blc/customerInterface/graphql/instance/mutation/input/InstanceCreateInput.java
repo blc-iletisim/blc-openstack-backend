@@ -1,5 +1,4 @@
 package com.blc.customerInterface.graphql.instance.mutation.input;
-import com.blc.customerInterface.graphql.pem.mutation.input.PemCreateInput;
 import com.blc.customerInterface.lib.dao.mutation.input.BaseCreateInput;
 
 
@@ -9,7 +8,7 @@ import java.util.UUID;
 
 public class InstanceCreateInput extends BaseCreateInput {
     private String name;
-    private PemCreateInput pem;
+    private UUID pem;
     private UUID flavor;
     private UUID user;
     private UUID image;
@@ -23,11 +22,11 @@ public class InstanceCreateInput extends BaseCreateInput {
         this.name = name;
     }
 
-    public PemCreateInput getPem() {
+    public UUID getPem() {
         return pem;
     }
 
-    public void setPem(PemCreateInput pem) {
+    public void setPem(UUID pem) {
         this.pem = pem;
     }
 

@@ -1,8 +1,0 @@
-type Pem{
-    id:ID!,
-    name:String!,
-    pem_url:String!,
-    createdDateTime:LocalDateTime,
-    updatedDateTime:LocalDateTime,
-    deletedDateTime: LocalDateTime
-}

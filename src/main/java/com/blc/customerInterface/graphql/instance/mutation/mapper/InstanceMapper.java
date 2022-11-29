@@ -9,11 +9,11 @@ import com.blc.customerInterface.graphql.image.service.ImageService;
 import com.blc.customerInterface.graphql.instance.domain.Instance;
 import com.blc.customerInterface.graphql.instance.mutation.input.InstanceCreateInput;
 import com.blc.customerInterface.graphql.instance.mutation.input.InstanceUpdateInput;
-import com.blc.customerInterface.graphql.pem.domain.Pem;
-import com.blc.customerInterface.graphql.pem.service.PemService;
 import com.blc.customerInterface.graphql.user.domain.User;
 import com.blc.customerInterface.graphql.user.service.UserService;
 import com.blc.customerInterface.lib.dao.mutation.mapper.BaseCreateUpdateMapper;
+import com.blc.customerInterface.pem.Pem;
+import com.blc.customerInterface.pem.PemRepository;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -30,17 +30,16 @@ public class InstanceMapper extends BaseCreateUpdateMapper<Instance, InstanceCre
     private final ImageService imageService;
     private final UserService userService;
     private final CategoryService categoryService;
-    private final PemService pemService;
+    private final PemRepository pemRepository;
 
     @Autowired
-    public InstanceMapper(FlavorService flavorService, ImageService imageService, UserService userService, CategoryService categoryService, PemService pemService) {
+    public InstanceMapper(FlavorService flavorService, ImageService imageService, UserService userService, CategoryService categoryService, PemRepository pemRepository) {
         this.flavorService = flavorService;
         this.imageService = imageService;
         this.userService = userService;
         this.categoryService = categoryService;
-        this.pemService = pemService;
+        this.pemRepository = pemRepository;
     }
-
 
     @Override
     public Instance toEntity(InstanceCreateInput input) throws Throwable {
@@ -49,10 +48,7 @@ public class InstanceMapper extends BaseCreateUpdateMapper<Instance, InstanceCre
 
         entity.setName(input.getName());
 
-        Pem pem = new Pem();
-        pem.setName(input.getPem().getName());
-        pem.setPem_url(input.getPem().getPem_url());
-        pemService.save(pem);
+        Pem pem = pemRepository.findById(input.getPem()).orElse(null);
         entity.setPem(pem);
 
         Flavor flavor = flavorService.findById(input.getFlavor()).orElseThrow(new Supplier<Throwable>() {

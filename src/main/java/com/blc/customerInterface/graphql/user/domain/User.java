@@ -3,6 +3,7 @@ package com.blc.customerInterface.graphql.user.domain;
 import com.blc.customerInterface.graphql.instance.domain.Instance;
 import com.blc.customerInterface.graphql.role.domain.Role;
 import com.blc.customerInterface.lib.dao.domain.BaseDomain;
+import com.blc.customerInterface.pem.Pem;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -22,6 +23,7 @@ public class User extends BaseDomain {
     private String company;
     private Role role;
     private List<Instance> instances= new ArrayList<>();
+    private List<Pem> pems = new ArrayList<>();
 
     @Column(nullable = false)
     public String getName() {
@@ -76,5 +78,15 @@ public class User extends BaseDomain {
 
     public void setInstances(List<Instance> instances) {
         this.instances = instances;
+    }
+
+    @OneToMany(mappedBy = "user")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    public List<Pem> getPems() {
+        return pems;
+    }
+
+    public void setPems(List<Pem> pems) {
+        this.pems = pems;
     }
 }

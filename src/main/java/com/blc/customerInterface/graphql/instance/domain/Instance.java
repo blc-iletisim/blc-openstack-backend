@@ -3,9 +3,11 @@ package com.blc.customerInterface.graphql.instance.domain;
 import com.blc.customerInterface.graphql.category.domain.Category;
 import com.blc.customerInterface.graphql.flavor.domain.Flavor;
 import com.blc.customerInterface.graphql.image.domain.Image;
-import com.blc.customerInterface.graphql.pem.domain.Pem;
 import com.blc.customerInterface.graphql.user.domain.User;
 import com.blc.customerInterface.lib.dao.domain.BaseDomain;
+import com.blc.customerInterface.pem.Pem;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -31,7 +33,7 @@ public class Instance extends BaseDomain {
         this.name = name;
     }
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     public Pem getPem() {
         return pem;
     }
@@ -67,7 +69,7 @@ public class Instance extends BaseDomain {
         this.image = image;
     }
 
-    @OneToMany(fetch = FetchType.EAGER,mappedBy = "instance")
+    @OneToMany(fetch = FetchType.EAGER)
     public Collection<Category> getCategories() {
         return categories;
     }

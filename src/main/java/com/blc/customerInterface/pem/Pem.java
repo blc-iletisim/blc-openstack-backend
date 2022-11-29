@@ -1,7 +1,9 @@
-package com.blc.customerInterface.graphql.pem.domain;
+package com.blc.customerInterface.pem;
 
 import com.blc.customerInterface.graphql.instance.domain.Instance;
+import com.blc.customerInterface.graphql.user.domain.User;
 import com.blc.customerInterface.lib.dao.domain.BaseDomain;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 
@@ -12,6 +14,7 @@ public class Pem extends BaseDomain {
     private String name;
     private String pem_url;
     private Instance instance;
+    private User user;
 
     @Column(nullable = false)
     public String getName() {
@@ -32,11 +35,33 @@ public class Pem extends BaseDomain {
     }
 
     @OneToOne(fetch = FetchType.EAGER,mappedBy = "pem")
+    @JsonIgnore
     public Instance getInstance() {
         return instance;
     }
 
     public void setInstance(Instance instance) {
         this.instance = instance;
+    }
+
+    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @JsonIgnore
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Pem{" +
+                "name='" + name + '\'' +
+                ", pem_url='" + pem_url + '\'' +
+                ", instance=" + instance +
+                ", user=" + user +
+                '}';
     }
 }

@@ -1,6 +1,6 @@
 input InstanceCreateInput {
     name:String,
-    pem:PemCreateInput,
+    pem:ID,
     flavor:ID!,
     image:ID,
     categories:[ID]
