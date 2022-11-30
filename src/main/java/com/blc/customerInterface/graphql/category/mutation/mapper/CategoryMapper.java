@@ -23,8 +23,6 @@ public class CategoryMapper extends BaseCreateUpdateMapper<Category, CategoryCre
         Category entity = new Category();
         entity.setName(input.getName());
 
-        Instance instance = instanceService.findById(input.getInstance()).orElse(null);
-        entity.setInstance(instance);
         return entity;
     }
 
@@ -32,8 +30,6 @@ public class CategoryMapper extends BaseCreateUpdateMapper<Category, CategoryCre
     public Category updateEntity(Category entity, CategoryUpdateInput input) {
         entity.setName(input.getName());
 
-        Instance instance = instanceService.findById(input.getInstance()).orElse(null);
-        entity.setInstance(instance);
         return entity;
     }
 }

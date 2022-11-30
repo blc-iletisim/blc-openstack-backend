@@ -25,7 +25,6 @@ import java.util.function.Supplier;
 
 @Component
 public class InstanceMapper extends BaseCreateUpdateMapper<Instance, InstanceCreateInput, InstanceUpdateInput> {
-
     private final FlavorService flavorService;
     private final ImageService imageService;
     private final UserService userService;

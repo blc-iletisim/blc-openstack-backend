@@ -6,8 +6,6 @@ import com.blc.customerInterface.graphql.image.domain.Image;
 import com.blc.customerInterface.graphql.user.domain.User;
 import com.blc.customerInterface.lib.dao.domain.BaseDomain;
 import com.blc.customerInterface.pem.Pem;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -69,7 +67,7 @@ public class Instance extends BaseDomain {
         this.image = image;
     }
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     public Collection<Category> getCategories() {
         return categories;
     }

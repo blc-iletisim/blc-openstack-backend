@@ -8,7 +8,7 @@ input InstanceCreateInput {
 }
 input InstanceUpdateInput {
     name:String,
-    flavor:ID!,
+    flavor:ID,
     categories:[ID]
 
 }

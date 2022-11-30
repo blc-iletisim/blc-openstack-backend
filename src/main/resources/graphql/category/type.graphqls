@@ -1,7 +1,7 @@
 type Category{
     id:ID!,
     name:String!,
-    instance:Instance,
+    instances:[Instance],
     createdDateTime:LocalDateTime,
     updatedDateTime:LocalDateTime,
     deletedDateTime: LocalDateTime

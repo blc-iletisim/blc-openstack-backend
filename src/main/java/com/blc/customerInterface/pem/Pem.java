@@ -34,7 +34,7 @@ public class Pem extends BaseDomain {
         this.name = name;
     }
 
-    @OneToOne(fetch = FetchType.EAGER,mappedBy = "pem")
+    @OneToOne(fetch = FetchType.EAGER,mappedBy = "pem",cascade = CascadeType.ALL)
     @JsonIgnore
     public Instance getInstance() {
         return instance;

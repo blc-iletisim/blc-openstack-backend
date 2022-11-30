@@ -70,7 +70,7 @@ public class User extends BaseDomain {
         this.role = role;
     }
 
-    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user")
     @LazyCollection(LazyCollectionOption.FALSE)
     public List<Instance> getInstances() {
         return instances;

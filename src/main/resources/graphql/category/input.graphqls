@@ -1,10 +1,8 @@
 input CategoryCreateInput {
-    name:String!,
-    instance:ID!
+    name:String!
 }
 
 input CategoryUpdateInput {
-    name:String!,
-    instance:ID!
+    name:String!
 
 }
