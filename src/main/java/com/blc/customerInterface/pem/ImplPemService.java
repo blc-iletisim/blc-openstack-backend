@@ -2,10 +2,9 @@ package com.blc.customerInterface.pem;
 
 import com.blc.customerInterface.configuration.DefaultResponse;
 
-import com.blc.customerInterface.configuration.FileStorageProperties;
+
 import com.blc.customerInterface.configuration.StorageService;
 import com.blc.customerInterface.exception.FileStorageException;
-import com.blc.customerInterface.exception.MyFileNotFoundException;
 import com.blc.customerInterface.graphql.instance.service.InstanceService;
 import com.blc.customerInterface.graphql.user.domain.User;
 import com.blc.customerInterface.graphql.user.repo.UserRepo;
@@ -15,8 +14,6 @@ import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,18 +21,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import java.io.*;
-import java.net.MalformedURLException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.security.*;
 import java.security.interfaces.RSAPrivateKey;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
 import static io.swagger.v3.oas.integration.StringOpenApiConfigurationLoader.LOGGER;
 
@@ -144,6 +133,19 @@ public class ImplPemService implements PemService{
         }catch (Exception e){
             return new DefaultResponse<>(false,null);
         }
+    }
+
+    @Override
+    public DefaultResponse<List<Pem>> getPemsToUser(String token) {
+       try {
+           String[] token2= token.split(" ");
+           token = token2[1];
+           String userName = jwtTokenProvider.getUserNameFromJwt(token);
+           User user = userRepository.findByEmail(userName).orElse(null);
+           return new DefaultResponse<>(true,"",user.getPems());
+       }catch (Exception e){
+           return new DefaultResponse<>(false,null);
+       }
     }
 
 

@@ -10,10 +10,12 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
+import java.util.List;
 import java.util.UUID;
 
 public interface PemService {
     DefaultResponse<Pem> createPem(String file_name, String token) throws IOException, NoSuchAlgorithmException, NoSuchProviderException;
 
     DefaultResponse<Pem> uploadFile(MultipartFile file, String token);
+    DefaultResponse<List<Pem>> getPemsToUser(String token);
 }
