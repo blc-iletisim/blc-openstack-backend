@@ -13,7 +13,6 @@ import java.util.*;
 @Entity
 @Table(name = "role")
 public class Role extends BaseDomain {
-
     private String name;
     private List<Permission> permissions = new ArrayList<>();
     private List<User> users = new ArrayList<>();

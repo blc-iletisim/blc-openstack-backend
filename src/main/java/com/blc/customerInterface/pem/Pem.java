@@ -44,7 +44,7 @@ public class Pem extends BaseDomain {
         this.instance = instance;
     }
 
-    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JsonIgnore
     public User getUser() {
         return user;
