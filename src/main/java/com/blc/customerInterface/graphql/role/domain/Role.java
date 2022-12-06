@@ -36,7 +36,7 @@ public class Role extends BaseDomain {
         this.permissions = permissions;
     }
 
-    @OneToMany(mappedBy = "role",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "role",fetch = FetchType.EAGER)
     public List<User> getUsers() {
         return users;
     }

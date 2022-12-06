@@ -4,9 +4,7 @@ package com.blc.customerInterface.graphql.refreshToken.domain;
 import com.blc.customerInterface.graphql.user.domain.User;
 import com.blc.customerInterface.lib.dao.domain.BaseDomain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.time.Instant;
 
 @Entity(name = "refreshtoken")
@@ -17,7 +15,7 @@ public class RefreshToken extends BaseDomain {
     private Instant expiryDate;
 
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     public User getUser() {
         return user;
     }

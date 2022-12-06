@@ -1,6 +1,7 @@
 package com.blc.customerInterface.graphql.user.domain;
 
 import com.blc.customerInterface.graphql.instance.domain.Instance;
+import com.blc.customerInterface.graphql.refreshToken.domain.RefreshToken;
 import com.blc.customerInterface.graphql.role.domain.Role;
 import com.blc.customerInterface.lib.dao.domain.BaseDomain;
 import com.blc.customerInterface.pem.Pem;
@@ -24,6 +25,7 @@ public class User extends BaseDomain {
     private Role role;
     private List<Instance> instances= new ArrayList<>();
     private List<Pem> pems = new ArrayList<>();
+    private RefreshToken refreshToken;
 
     @Column(nullable = false)
     public String getName() {
@@ -88,5 +90,14 @@ public class User extends BaseDomain {
 
     public void setPems(List<Pem> pems) {
         this.pems = pems;
+    }
+
+    @OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL,mappedBy = "user")
+    public RefreshToken getRefreshToken() {
+        return refreshToken;
+    }
+
+    public void setRefreshToken(RefreshToken refreshToken) {
+        this.refreshToken = refreshToken;
     }
 }
