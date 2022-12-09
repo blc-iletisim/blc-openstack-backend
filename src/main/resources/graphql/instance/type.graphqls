@@ -1,6 +1,7 @@
 type Instance{
     id:ID!,
     name:String!,
+    pemName:String!,
     flavor:Flavor!,
     image:Image,
     user:User,

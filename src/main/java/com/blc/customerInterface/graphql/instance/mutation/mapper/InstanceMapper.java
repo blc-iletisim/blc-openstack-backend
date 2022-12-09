@@ -49,6 +49,7 @@ public class InstanceMapper extends BaseCreateUpdateMapper<Instance, InstanceCre
 
         Pem pem = pemRepository.findById(input.getPem()).orElse(null);
         entity.setPem(pem);
+        entity.setPemName(pem.getName());
 
         Flavor flavor = flavorService.findById(input.getFlavor()).orElseThrow(new Supplier<Throwable>() {
             @Override

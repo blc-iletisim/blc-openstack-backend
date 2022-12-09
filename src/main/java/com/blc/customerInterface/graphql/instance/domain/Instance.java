@@ -16,6 +16,7 @@ import java.util.Collection;
 public class Instance extends BaseDomain {
     //private static final long serialVersionUID = 1L;
     private String name;
+    private String pemName;
     private Pem pem;
     private Flavor flavor;
     private User user;
@@ -29,6 +30,15 @@ public class Instance extends BaseDomain {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Column(nullable = false)
+    public String getPemName() {
+        return pemName;
+    }
+
+    public void setPemName(String pemName) {
+        this.pemName = pemName;
     }
 
     @OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
