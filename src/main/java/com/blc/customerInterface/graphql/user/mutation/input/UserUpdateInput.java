@@ -10,7 +10,7 @@ public class UserUpdateInput extends BaseUpdateInput {
     private String email;
     private String password;
     private UUID role;
-    private String company;
+    private UUID company;
 
 
     public String getName() {
@@ -45,11 +45,11 @@ public class UserUpdateInput extends BaseUpdateInput {
         this.role = role;
     }
 
-    public String getCompany() {
+    public UUID getCompany() {
         return company;
     }
 
-    public void setCompany(String company) {
+    public void setCompany(UUID company) {
         this.company = company;
     }
 }

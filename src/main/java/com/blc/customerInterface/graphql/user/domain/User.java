@@ -1,5 +1,6 @@
 package com.blc.customerInterface.graphql.user.domain;
 
+import com.blc.customerInterface.graphql.company.domain.Company;
 import com.blc.customerInterface.graphql.instance.domain.Instance;
 import com.blc.customerInterface.graphql.refreshToken.domain.RefreshToken;
 import com.blc.customerInterface.graphql.role.domain.Role;
@@ -21,7 +22,7 @@ public class User extends BaseDomain {
     private String name;
     private String email;
     private String password;
-    private String company;
+    private Company company;
     private Role role;
     private List<Instance> instances= new ArrayList<>();
     private List<Pem> pems = new ArrayList<>();
@@ -54,12 +55,12 @@ public class User extends BaseDomain {
         this.password = password;
     }
 
-    @Column(nullable = false)
-    public String getCompany() {
+    @ManyToOne(fetch = FetchType.EAGER)
+    public Company getCompany() {
         return company;
     }
 
-    public void setCompany(String company) {
+    public void setCompany(Company company) {
         this.company = company;
     }
 

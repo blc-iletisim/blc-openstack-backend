@@ -1,0 +1,6 @@
+extend type Mutation {
+    createCompany(input: CompanyCreateInput!): Company!
+    updateCompany(id: ID!, input: CompanyUpdateInput!): Company!
+    deleteCompany(id: ID!): ID!
+    undeleteCompany(id: ID): Company!
+}

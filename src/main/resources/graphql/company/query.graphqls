@@ -1,0 +1,5 @@
+extend type Query{
+    company(id: ID!): Company!
+    companies(criteria: CompanyCriteria, sortBy: [SortBy!]): [Company!]
+    paginateCompanies(pagination : Pagination!, criteria: CompanyCriteria, sortBy:[SortBy!] ) : CompanyPageable!
+}

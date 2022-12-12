@@ -1,0 +1,8 @@
+input CompanyCreateInput {
+    name:String!
+}
+
+input CompanyUpdateInput {
+    name:String!
+
+}

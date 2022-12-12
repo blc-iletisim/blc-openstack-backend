@@ -1,0 +1,4 @@
+type CompanyPageable{
+    pageInfo: PageInfo!
+    content: [Company!]
+}

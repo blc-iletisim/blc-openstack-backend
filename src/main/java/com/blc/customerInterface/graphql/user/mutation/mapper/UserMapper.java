@@ -1,5 +1,7 @@
 package com.blc.customerInterface.graphql.user.mutation.mapper;
 
+import com.blc.customerInterface.graphql.company.domain.Company;
+import com.blc.customerInterface.graphql.company.service.CompanyService;
 import com.blc.customerInterface.graphql.role.domain.Role;
 import com.blc.customerInterface.graphql.role.service.RoleService;
 import com.blc.customerInterface.graphql.user.domain.User;
@@ -16,10 +18,13 @@ public class UserMapper extends BaseCreateUpdateMapper<User, UserCreateInput, Us
     private final RoleService roleService;
     private final PasswordEncoder passwordEncoder;
 
+    private final CompanyService companyService;
+
     @Autowired
-    public UserMapper(RoleService roleService, PasswordEncoder passwordEncoder) {
+    public UserMapper(RoleService roleService, PasswordEncoder passwordEncoder, CompanyService companyService) {
         this.roleService = roleService;
         this.passwordEncoder = passwordEncoder;
+        this.companyService = companyService;
     }
 
     @Override
@@ -28,7 +33,8 @@ public class UserMapper extends BaseCreateUpdateMapper<User, UserCreateInput, Us
         entity.setName(input.getName());
         entity.setEmail(input.getEmail());
         entity.setPassword(passwordEncoder.encode(input.getPassword()));
-        entity.setCompany(input.getCompany());
+        Company company = companyService.findById(input.getCompany()).orElse(null);
+        entity.setCompany(company);
         Role role = roleService.findById(input.getRole()).orElse(null);
         entity.setRole(role);
         return entity;
@@ -39,7 +45,8 @@ public class UserMapper extends BaseCreateUpdateMapper<User, UserCreateInput, Us
         entity.setName(input.getName());
         entity.setEmail(input.getEmail());
         entity.setPassword(passwordEncoder.encode(input.getPassword()));
-        entity.setCompany(input.getCompany());
+        Company company = companyService.findById(input.getCompany()).orElse(null);
+        entity.setCompany(company);
         Role role = roleService.findById(input.getRole()).orElse(null);
         entity.setRole(role);
         return entity;
