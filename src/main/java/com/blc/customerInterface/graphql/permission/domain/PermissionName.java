@@ -37,4 +37,8 @@ public class PermissionName {
     public static final String ROLE_DELETE = "role_delete";
     public static final String ROLE_UNDELETE= "role_undelete";
 
+    public static final String COMPANY_CREATE = "company_create";
+    public static final String COMPANY_UPDATE = "company_update";
+    public static final String COMPANY_DELETE = "company_delete";
+    public static final String COMPANY_UNDELETE= "company_undelete";
 }

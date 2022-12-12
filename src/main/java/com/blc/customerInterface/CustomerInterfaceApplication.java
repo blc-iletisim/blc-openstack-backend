@@ -2,6 +2,8 @@ package com.blc.customerInterface;
 
 import com.blc.customerInterface.graphql.category.domain.Category;
 import com.blc.customerInterface.graphql.category.service.CategoryService;
+import com.blc.customerInterface.graphql.company.domain.Company;
+import com.blc.customerInterface.graphql.company.service.CompanyService;
 import com.blc.customerInterface.graphql.flavor.domain.Flavor;
 import com.blc.customerInterface.graphql.flavor.service.FlavorService;
 import com.blc.customerInterface.graphql.image.domain.Image;
@@ -18,9 +20,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @SpringBootApplication
 public class CustomerInterfaceApplication implements CommandLineRunner {
@@ -30,16 +30,18 @@ public class CustomerInterfaceApplication implements CommandLineRunner {
 	private final CategoryService categoryService;
 	private final ImageService imageService;
 	private final FlavorService flavorService;
+	private final CompanyService companyService;
 
 
 	@Autowired
-	public CustomerInterfaceApplication(PermissionService permissionService, PermissionRepo permissionRepo, RoleService roleService, CategoryService categoryService, ImageService imageService, FlavorService flavorService) {
+	public CustomerInterfaceApplication(PermissionService permissionService, PermissionRepo permissionRepo, RoleService roleService, CategoryService categoryService, ImageService imageService, FlavorService flavorService, CompanyService companyService) {
 		this.permissionService = permissionService;
 		this.permissionRepo = permissionRepo;
 		this.roleService = roleService;
 		this.categoryService = categoryService;
 		this.imageService = imageService;
 		this.flavorService = flavorService;
+		this.companyService = companyService;
 	}
 
 	public static void main(String[] args) {
@@ -165,6 +167,16 @@ public class CustomerInterfaceApplication implements CommandLineRunner {
 		Permission role_undelete = new Permission();
 		role_undelete.setName(PermissionName.ROLE_UNDELETE);
 
+		Permission company_create = new Permission();
+		company_create.setName(PermissionName.COMPANY_CREATE);
+		Permission company_update = new Permission();
+		company_update.setName(PermissionName.COMPANY_UPDATE);
+		Permission company_delete = new Permission();
+		company_delete.setName(PermissionName.COMPANY_DELETE);
+		Permission company_undelete = new Permission();
+		company_undelete.setName(PermissionName.COMPANY_UNDELETE);
+
+
 		permissionService.saveAll(List.of(
 				user_create, user_update, user_delete, user_undelete,
 				instance_create,instance_update,instance_delete,instance_undelete,
@@ -172,7 +184,8 @@ public class CustomerInterfaceApplication implements CommandLineRunner {
 				category_create,category_update,category_delete,category_undelete,
 				image_create,image_update,image_delete,image_undelete,
 				pem_create,pem_update,pem_delete,pem_undelete,
-				role_create,role_update,role_delete,role_undelete
+				role_create,role_update,role_delete,role_undelete,
+				company_create,company_update,company_delete,company_undelete
 				));
 
 	}
@@ -181,14 +194,9 @@ public class CustomerInterfaceApplication implements CommandLineRunner {
 		Role roleAdmin = new Role();
 		roleAdmin.setName("ADMIN");
 
-		List<Permission> permissionsAdmin = new ArrayList<>();
-		for (int i=0;i<permissionService.findAll().size();i++){
-			permissionsAdmin.add(permissionService.findAll().get(i));
-		}
+		List<Permission> permissionsAdmin = new ArrayList<>(permissionService.findAll());
 		roleAdmin.setPermissions(permissionsAdmin);
 		roleService.save(roleAdmin);
-
-
 
 		Role roleUser = new Role();
 		roleUser.setName("USER");
@@ -198,11 +206,16 @@ public class CustomerInterfaceApplication implements CommandLineRunner {
 		Permission instance_delete = permissionRepo.findByName(PermissionName.INSTANCE_DELETE);
 		Permission instance_undelete = permissionRepo.findByName(PermissionName.INSTANCE_UNDELETE);
 
-		List<Permission> permissionsUser = new ArrayList<>();
-		permissionsUser.addAll(List.of(instance_create,instance_update,instance_delete,instance_undelete));
+		List<Permission> permissionsUser = new ArrayList<>(List.of(instance_create, instance_update, instance_delete, instance_undelete));
 		roleUser.setPermissions(permissionsUser);
 		roleService.save(roleUser);
 
+	}
+
+	public void createDefaultCompany(){
+		Company company = new Company();
+		company.setName("Default Company");
+		companyService.save(company);
 	}
 
 	@Override
