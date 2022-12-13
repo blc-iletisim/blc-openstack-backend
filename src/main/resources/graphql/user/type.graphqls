@@ -3,7 +3,7 @@ type User{
     name:String!,
     email:String!,
     password:String,
-    company:String!,
+    company:Company!,
     role:Role!,
     instances:[Instance],
     createdDateTime:LocalDateTime,

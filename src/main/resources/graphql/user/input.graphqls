@@ -3,7 +3,7 @@ input UserCreateInput {
     email:String!,
     password:String!,
     role:ID!,
-    company:String!
+    company:ID!
 
 }
 
@@ -12,6 +12,6 @@ input UserUpdateInput {
     email:String,
     password:String,
     role:ID,
-    company:String
+    company:ID
 
 }
