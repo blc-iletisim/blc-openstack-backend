@@ -58,13 +58,13 @@ public class AuthMutation implements GraphQLMutationResolver {
                                 String.format("User %s does not exist", input.getEmail()),
                                 HttpStatus.BAD_REQUEST)
                 );
-    RefreshToken resfreshToken = refreshTokenService.createRefreshToken(user.getId());
+      RefreshToken refreshToken = refreshTokenService.createRefreshToken(user.getId());
 
       JwtUserDetailsImpl userDetails = (JwtUserDetailsImpl) authentication.getPrincipal();
 
         JwtResponse jwtResponse=new JwtResponse(
         token,
-        resfreshToken.getToken(),
+        refreshToken.getToken(),
         userDetails.getId(),
         user.getRole().getName(),
         userDetails.getEmail(),

@@ -25,7 +25,6 @@ public class User extends BaseDomain {
     private Role role;
     private List<Instance> instances= new ArrayList<>();
     private List<Pem> pems = new ArrayList<>();
-    private RefreshToken refreshToken;
 
     @Column(nullable = false)
     public String getName() {
@@ -90,14 +89,5 @@ public class User extends BaseDomain {
 
     public void setPems(List<Pem> pems) {
         this.pems = pems;
-    }
-
-    @OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL,mappedBy = "user")
-    public RefreshToken getRefreshToken() {
-        return refreshToken;
-    }
-
-    public void setRefreshToken(RefreshToken refreshToken) {
-        this.refreshToken = refreshToken;
     }
 }
