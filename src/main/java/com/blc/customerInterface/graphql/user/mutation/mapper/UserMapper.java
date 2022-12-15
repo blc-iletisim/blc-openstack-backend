@@ -17,7 +17,6 @@ import org.springframework.stereotype.Component;
 public class UserMapper extends BaseCreateUpdateMapper<User, UserCreateInput, UserUpdateInput> {
     private final RoleService roleService;
     private final PasswordEncoder passwordEncoder;
-
     private final CompanyService companyService;
 
     @Autowired
@@ -33,9 +32,9 @@ public class UserMapper extends BaseCreateUpdateMapper<User, UserCreateInput, Us
         entity.setName(input.getName());
         entity.setEmail(input.getEmail());
         entity.setPassword(passwordEncoder.encode(input.getPassword()));
-        Company company = companyService.findById(input.getCompany()).orElse(null);
+        Company company = companyService.findById(input.getCompany()).orElseThrow(RuntimeException::new);
         entity.setCompany(company);
-        Role role = roleService.findById(input.getRole()).orElse(null);
+        Role role = roleService.findById(input.getRole()).orElseThrow(RuntimeException::new);
         entity.setRole(role);
         return entity;
     }

@@ -29,8 +29,8 @@ public class UserMutation implements GraphQLMutationResolver {
 
     //@PreAuthorize("hasAuthority('"+ PermissionName.USER_CREATE +"')")
     public User createUser(UserCreateInput input){
-        return userService.save(userMapper.toEntity(input));
-    }
+            return userService.save(userMapper.toEntity(input));
+        }
 
     @PreAuthorize("hasAuthority('"+PermissionName.USER_UPDATE +"')")
     public User updateUser(UUID id, UserUpdateInput input){

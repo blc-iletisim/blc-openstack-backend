@@ -2,7 +2,6 @@ package com.blc.customerInterface.graphql.user.domain;
 
 import com.blc.customerInterface.graphql.company.domain.Company;
 import com.blc.customerInterface.graphql.instance.domain.Instance;
-import com.blc.customerInterface.graphql.refreshToken.domain.RefreshToken;
 import com.blc.customerInterface.graphql.role.domain.Role;
 import com.blc.customerInterface.lib.dao.domain.BaseDomain;
 import com.blc.customerInterface.pem.Pem;
@@ -36,7 +35,7 @@ public class User extends BaseDomain {
         this.name = name;
     }
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     public String getEmail() {
         return email;
     }
