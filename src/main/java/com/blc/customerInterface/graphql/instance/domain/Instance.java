@@ -41,7 +41,7 @@ public class Instance extends BaseDomain {
         this.pemName = pemName;
     }
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     public Pem getPem() {
         return pem;
     }

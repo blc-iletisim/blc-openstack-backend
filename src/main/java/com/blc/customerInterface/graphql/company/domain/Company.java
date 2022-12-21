@@ -11,7 +11,6 @@ import java.util.*;
 public class Company extends BaseDomain {
 
     private String name;
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "company", cascade = CascadeType.ALL)
     private List<User> users= new ArrayList<>();
 
     public String getName() {
@@ -20,6 +19,11 @@ public class Company extends BaseDomain {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "company", cascade = CascadeType.ALL)
+    public List<User> getUsers() {
+        return users;
     }
 
     public void setUsers(List<User> users) {

@@ -4,6 +4,7 @@ type Flavor{
     cpu_size:Int!,
     ram_size:Int!,
     root_disk:Int!,
+    instances:[Instance],
     createdDateTime:LocalDateTime,
     updatedDateTime:LocalDateTime,
     deletedDateTime: LocalDateTime

@@ -6,6 +6,8 @@ import com.blc.customerInterface.lib.dao.domain.BaseDomain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "pem")
@@ -13,7 +15,7 @@ public class Pem extends BaseDomain {
 
     private String name;
     private String pem_url;
-    private Instance instance;
+    private List<Instance> instances = new ArrayList<>();
     private User user;
 
     @Column(nullable = false)
@@ -34,14 +36,14 @@ public class Pem extends BaseDomain {
         this.name = name;
     }
 
-    @OneToOne(fetch = FetchType.EAGER,mappedBy = "pem",cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "pem",cascade = CascadeType.ALL)
     @JsonIgnore
-    public Instance getInstance() {
-        return instance;
+    public List<Instance> getInstances() {
+        return instances;
     }
 
-    public void setInstance(Instance instance) {
-        this.instance = instance;
+    public void setInstances(List<Instance> instances) {
+        this.instances = instances;
     }
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -60,7 +62,7 @@ public class Pem extends BaseDomain {
         return "Pem{" +
                 "name='" + name + '\'' +
                 ", pem_url='" + pem_url + '\'' +
-                ", instance=" + instance +
+                ", instances=" + instances +
                 ", user=" + user +
                 '}';
     }

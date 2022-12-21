@@ -1,7 +1,7 @@
 type Company{
     id:ID!,
     name:String!,
-    users:[User!],
+    users:[User],
     createdDateTime:LocalDateTime,
     updatedDateTime:LocalDateTime,
     deletedDateTime: LocalDateTime

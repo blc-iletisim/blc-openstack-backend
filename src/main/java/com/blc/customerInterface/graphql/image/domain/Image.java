@@ -22,7 +22,7 @@ public class Image extends BaseDomain {
         this.name = name;
     }
 
-    @OneToMany(mappedBy = "image",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "image",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     public Collection<Instance> getInstances() {
         return instances;
     }

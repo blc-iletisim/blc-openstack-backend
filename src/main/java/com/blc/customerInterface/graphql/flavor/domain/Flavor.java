@@ -52,7 +52,7 @@ public class Flavor extends BaseDomain {
         this.root_disk = root_disk;
     }
 
-    @OneToMany(mappedBy = "flavor",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "flavor",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     public Collection<Instance> getInstances() {
         return instances;
     }

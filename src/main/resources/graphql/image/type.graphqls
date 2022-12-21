@@ -1,6 +1,7 @@
 type Image{
     id:ID!,
     name:String!,
+    instances:[Instance],
     createdDateTime:LocalDateTime,
     updatedDateTime:LocalDateTime,
     deletedDateTime: LocalDateTime
