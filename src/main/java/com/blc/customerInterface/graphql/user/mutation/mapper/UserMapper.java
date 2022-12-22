@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.util.function.Supplier;
+
 @Component
 public class UserMapper extends BaseCreateUpdateMapper<User, UserCreateInput, UserUpdateInput> {
     private final RoleService roleService;
@@ -28,12 +30,17 @@ public class UserMapper extends BaseCreateUpdateMapper<User, UserCreateInput, Us
     }
 
     @Override
-    public User toEntity(UserCreateInput input)  {
+    public User toEntity(UserCreateInput input) throws Throwable {
         User entity = new User();
         entity.setName(input.getName());
         entity.setEmail(input.getEmail());
         entity.setPassword(passwordEncoder.encode(input.getPassword()));
-        Company company = companyService.findById(input.getCompany()).orElse(null);
+        Company company = companyService.findById(input.getCompany()).orElseThrow(new Supplier<Throwable>() {
+            @Override
+            public Throwable get() {
+                return new RuntimeException();
+            }
+        });
         entity.setCompany(company);
         Role role = roleService.findById(input.getRole()).orElse(null);
         entity.setRole(role);
@@ -41,11 +48,16 @@ public class UserMapper extends BaseCreateUpdateMapper<User, UserCreateInput, Us
     }
 
     @Override
-    public User updateEntity(User entity, UserUpdateInput input)  {
+    public User updateEntity(User entity, UserUpdateInput input) throws Throwable {
         entity.setName(input.getName());
         entity.setEmail(input.getEmail());
         entity.setPassword(passwordEncoder.encode(input.getPassword()));
-        Company company = companyService.findById(input.getCompany()).orElse(null);
+        Company company = companyService.findById(input.getCompany()).orElseThrow(new Supplier<Throwable>() {
+            @Override
+            public Throwable get() {
+                return new RuntimeException();
+            }
+        });
         entity.setCompany(company);
         Role role = roleService.findById(input.getRole()).orElse(null);
         entity.setRole(role);

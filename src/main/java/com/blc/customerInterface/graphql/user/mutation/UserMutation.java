@@ -28,13 +28,19 @@ public class UserMutation implements GraphQLMutationResolver {
     }
 
     //@PreAuthorize("hasAuthority('"+ PermissionName.USER_CREATE +"')")
-    public User createUser(UserCreateInput input){
+    public User createUser(UserCreateInput input) throws Throwable {
         return userService.save(userMapper.toEntity(input));
     }
 
     @PreAuthorize("hasAuthority('"+PermissionName.USER_UPDATE +"')")
     public User updateUser(UUID id, UserUpdateInput input){
-        return userService.findById(id).map(user -> userService.update(userMapper.updateEntity(user,input))).orElseThrow(RuntimeException::new);
+        return userService.findById(id).map(user -> {
+            try {
+                return userService.update(userMapper.updateEntity(user,input));
+            } catch (Throwable e) {
+                throw new RuntimeException(e);
+            }
+        }).orElseThrow(RuntimeException::new);
     }
 
     @PreAuthorize("hasAuthority('"+PermissionName.USER_DELETE +"')")
