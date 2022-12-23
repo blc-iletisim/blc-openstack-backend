@@ -6,6 +6,8 @@ import com.blc.customerInterface.lib.dao.domain.BaseDomain;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "flavor")
@@ -14,7 +16,7 @@ public class Flavor extends BaseDomain {
     private int cpu_size;
     private int ram_size;
     private int root_disk;
-    private Collection<Instance> instances = new ArrayList<>();
+    private List<Instance> instances = new ArrayList<>();
 
     @Column(nullable = false)
     public String getName() {
@@ -53,11 +55,11 @@ public class Flavor extends BaseDomain {
     }
 
     @OneToMany(mappedBy = "flavor",fetch = FetchType.EAGER)
-    public Collection<Instance> getInstances() {
+    public List<Instance> getInstances() {
         return instances;
     }
 
-    public void setInstances(Collection<Instance> instances) {
+    public void setInstances(List<Instance> instances) {
         this.instances = instances;
     }
 }

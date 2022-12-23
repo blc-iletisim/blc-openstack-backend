@@ -6,12 +6,13 @@ import com.blc.customerInterface.lib.dao.domain.BaseDomain;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name = "image")
 public class Image extends BaseDomain {
     private String name;
-    private Collection<Instance> instances= new ArrayList<>();
+    private List<Instance> instances= new ArrayList<>();
 
     @Column(nullable = false)
     public String getName() {
@@ -23,11 +24,11 @@ public class Image extends BaseDomain {
     }
 
     @OneToMany(mappedBy = "image",fetch = FetchType.EAGER)
-    public Collection<Instance> getInstances() {
+    public List<Instance> getInstances() {
         return instances;
     }
 
-    public void setInstances(Collection<Instance> instances) {
+    public void setInstances(List<Instance> instances) {
         this.instances = instances;
     }
 }

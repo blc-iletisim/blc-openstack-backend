@@ -10,6 +10,8 @@ import com.blc.customerInterface.pem.Pem;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "instance")
@@ -21,7 +23,7 @@ public class Instance extends BaseDomain {
     private Flavor flavor;
     private User user;
     private Image image;
-    private Collection<Category> categories= new ArrayList<>();
+    private Set<Category> categories= new HashSet<>();
 
     @Column(nullable = false)
     public String getName() {
@@ -41,7 +43,7 @@ public class Instance extends BaseDomain {
         this.pemName = pemName;
     }
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     public Pem getPem() {
         return pem;
     }
@@ -78,11 +80,11 @@ public class Instance extends BaseDomain {
     }
 
     @ManyToMany(fetch = FetchType.EAGER)
-    public Collection<Category> getCategories() {
+    public Set<Category> getCategories() {
         return categories;
     }
 
-    public void setCategories(Collection<Category> categories) {
+    public void setCategories(Set<Category> categories) {
         this.categories = categories;
     }
 }

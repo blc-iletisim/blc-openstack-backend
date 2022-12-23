@@ -6,12 +6,14 @@ import com.blc.customerInterface.lib.dao.domain.BaseDomain;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "category")
 public class Category extends BaseDomain {
     private String name;
-    private Collection<Instance> instances= new ArrayList<>();
+    private Set<Instance> instances= new HashSet<>();
 
     @Column(nullable = false)
     public String getName() {
@@ -23,11 +25,11 @@ public class Category extends BaseDomain {
     }
 
     @ManyToMany(fetch = FetchType.EAGER,mappedBy = "categories")
-    public Collection<Instance> getInstances() {
+    public Set<Instance> getInstances() {
         return instances;
     }
 
-    public void setInstances(Collection<Instance> instances) {
+    public void setInstances(Set<Instance> instances) {
         this.instances = instances;
     }
 }

@@ -72,8 +72,8 @@ public class User extends BaseDomain {
         this.role = role;
     }
 
-    @OneToMany(mappedBy = "user")
-    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
+    //@LazyCollection(LazyCollectionOption.FALSE)
     public List<Instance> getInstances() {
         return instances;
     }
@@ -82,8 +82,8 @@ public class User extends BaseDomain {
         this.instances = instances;
     }
 
-    @OneToMany(mappedBy = "user")
-    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
+   // @LazyCollection(LazyCollectionOption.FALSE)
     public List<Pem> getPems() {
         return pems;
     }
