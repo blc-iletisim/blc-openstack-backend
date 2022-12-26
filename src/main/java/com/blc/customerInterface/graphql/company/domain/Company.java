@@ -2,6 +2,9 @@ package com.blc.customerInterface.graphql.company.domain;
 
 import com.blc.customerInterface.graphql.user.domain.User;
 import com.blc.customerInterface.lib.dao.domain.BaseDomain;
+import org.codehaus.jackson.annotate.JsonIgnore;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.*;
@@ -20,7 +23,8 @@ public class Company extends BaseDomain {
     public void setName(String name) {
         this.name = name;
     }
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "company")
+    @OneToMany(mappedBy = "company")
+    @LazyCollection(LazyCollectionOption.FALSE)
     public List<User> getUsers() {
         return users;
     }

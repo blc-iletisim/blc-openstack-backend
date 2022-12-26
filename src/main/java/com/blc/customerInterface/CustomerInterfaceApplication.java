@@ -3,6 +3,7 @@ package com.blc.customerInterface;
 import com.blc.customerInterface.graphql.category.domain.Category;
 import com.blc.customerInterface.graphql.category.service.CategoryService;
 import com.blc.customerInterface.graphql.company.domain.Company;
+import com.blc.customerInterface.graphql.company.repo.CompanyRepo;
 import com.blc.customerInterface.graphql.company.service.CompanyService;
 import com.blc.customerInterface.graphql.flavor.domain.Flavor;
 import com.blc.customerInterface.graphql.flavor.service.FlavorService;
@@ -13,6 +14,7 @@ import com.blc.customerInterface.graphql.permission.domain.PermissionName;
 import com.blc.customerInterface.graphql.permission.repo.PermissionRepo;
 import com.blc.customerInterface.graphql.permission.service.PermissionService;
 import com.blc.customerInterface.graphql.role.domain.Role;
+import com.blc.customerInterface.graphql.role.repo.RoleRepo;
 import com.blc.customerInterface.graphql.role.service.RoleService;
 import com.blc.customerInterface.graphql.user.domain.User;
 import com.blc.customerInterface.graphql.user.service.UserService;
@@ -36,10 +38,12 @@ public class CustomerInterfaceApplication implements CommandLineRunner {
     private final CompanyService companyService;
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
+    private final CompanyRepo companyRepo;
+    private final RoleRepo roleRepo;
 
 
     @Autowired
-    public CustomerInterfaceApplication(PermissionService permissionService, PermissionRepo permissionRepo, RoleService roleService, CategoryService categoryService, ImageService imageService, FlavorService flavorService, CompanyService companyService, UserService userService, PasswordEncoder passwordEncoder) {
+    public CustomerInterfaceApplication(PermissionService permissionService, PermissionRepo permissionRepo, RoleService roleService, CategoryService categoryService, ImageService imageService, FlavorService flavorService, CompanyService companyService, UserService userService, PasswordEncoder passwordEncoder, CompanyRepo companyRepo, RoleRepo roleRepo) {
         this.permissionService = permissionService;
         this.permissionRepo = permissionRepo;
         this.roleService = roleService;
@@ -49,6 +53,8 @@ public class CustomerInterfaceApplication implements CommandLineRunner {
         this.companyService = companyService;
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
+        this.companyRepo = companyRepo;
+        this.roleRepo = roleRepo;
     }
 
     public static void main(String[] args) {
@@ -232,8 +238,8 @@ public class CustomerInterfaceApplication implements CommandLineRunner {
         user.setName("admin");
         user.setEmail("admin@blc.com");
         user.setPassword(passwordEncoder.encode("admin"));
-		user.setCompany(companyService.findAll().get(0));
-        user.setRole(roleService.findAll().get(0));
+		user.setCompany(companyRepo.findByName("Default Company"));
+        user.setRole(roleRepo.findByName("ADMIN"));
         userService.save(user);
     }
 

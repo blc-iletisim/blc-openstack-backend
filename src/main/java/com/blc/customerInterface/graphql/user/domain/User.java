@@ -6,6 +6,7 @@ import com.blc.customerInterface.graphql.refreshToken.domain.RefreshToken;
 import com.blc.customerInterface.graphql.role.domain.Role;
 import com.blc.customerInterface.lib.dao.domain.BaseDomain;
 import com.blc.customerInterface.pem.Pem;
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -73,7 +74,6 @@ public class User extends BaseDomain {
     }
 
     @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
-    //@LazyCollection(LazyCollectionOption.FALSE)
     public List<Instance> getInstances() {
         return instances;
     }
