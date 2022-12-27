@@ -15,11 +15,18 @@ import com.blc.customerInterface.lib.dao.mutation.mapper.BaseCreateUpdateMapper;
 import com.blc.customerInterface.pem.Pem;
 import com.blc.customerInterface.pem.PemRepository;
 import lombok.SneakyThrows;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 @Component
 public class InstanceMapper extends BaseCreateUpdateMapper<Instance, InstanceCreateInput, InstanceUpdateInput> {
@@ -28,6 +35,13 @@ public class InstanceMapper extends BaseCreateUpdateMapper<Instance, InstanceCre
     private final UserService userService;
     private final CategoryService categoryService;
     private final PemRepository pemRepository;
+
+    @Autowired
+    @Value("${storage.json-path}")
+    private String jsonPath;
+    @Autowired
+    @Value("${storage.shell-path}")
+    private String shellPath;
 
     @Autowired
     public InstanceMapper(FlavorService flavorService, ImageService imageService, UserService userService, CategoryService categoryService, PemRepository pemRepository) {
@@ -90,6 +104,28 @@ public class InstanceMapper extends BaseCreateUpdateMapper<Instance, InstanceCre
             categories.add(category);
         }
         entity.setCategories(categories);
+
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("name", input.getName());
+        jsonObject.put("pem", pem.getName());
+        jsonObject.put("flavor", flavor.getName());
+        jsonObject.put("userName", user.getName());
+        jsonObject.put("image", image.getName());
+        jsonObject.put("category", categories.stream().map(category -> category.getName()).collect(Collectors.toList()));
+        try {
+
+            FileWriter file = new FileWriter(jsonPath+"/deneme.json");
+            file.write(jsonObject.toString());
+            file.close();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        System.out.println("JSON file created: "+jsonObject);
+
+        ProcessBuilder pb = new ProcessBuilder("src/main/java/com/blc/customerInterface/shell/instance.sh");
+        Process p = pb.start();
 
         return entity;
     }
