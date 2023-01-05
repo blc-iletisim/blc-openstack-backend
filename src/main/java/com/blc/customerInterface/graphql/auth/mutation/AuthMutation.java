@@ -4,6 +4,8 @@ import com.blc.customerInterface.exception.CustomException;
 import com.blc.customerInterface.exception.TokenRefreshException;
 import com.blc.customerInterface.graphql.auth.domain.JwtResponse;
 import com.blc.customerInterface.graphql.auth.mutation.input.AuthLoginInput;
+import com.blc.customerInterface.graphql.auth.mutation.input.AuthLogoutInput;
+import com.blc.customerInterface.graphql.logout.repo.LogoutRepository;
 import com.blc.customerInterface.graphql.refreshToken.domain.RefreshToken;
 import com.blc.customerInterface.graphql.refreshToken.service.RefreshTokenService;
 import com.blc.customerInterface.graphql.user.domain.User;
@@ -22,10 +24,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 
 @Component
 @Validated
@@ -35,14 +33,16 @@ public class AuthMutation implements GraphQLMutationResolver {
     private final UserRepo userRepo;
     private final JwtTokenProvider jwtTokenProvider;
     private final RefreshTokenService refreshTokenService;
+    private final LogoutRepository logoutRepository;
 
 
     @Autowired
-    public AuthMutation(AuthenticationManager authenticationManager, UserRepo userRepo, JwtTokenProvider jwtTokenProvider, RefreshTokenService refreshTokenService) {
+    public AuthMutation(AuthenticationManager authenticationManager, UserRepo userRepo, JwtTokenProvider jwtTokenProvider, RefreshTokenService refreshTokenService, LogoutRepository logoutRepository) {
         this.authenticationManager = authenticationManager;
         this.userRepo = userRepo;
         this.jwtTokenProvider = jwtTokenProvider;
         this.refreshTokenService = refreshTokenService;
+        this.logoutRepository = logoutRepository;
     }
 
 
@@ -62,14 +62,13 @@ public class AuthMutation implements GraphQLMutationResolver {
 
       JwtUserDetailsImpl userDetails = (JwtUserDetailsImpl) authentication.getPrincipal();
 
-        JwtResponse jwtResponse=new JwtResponse(
+        return new JwtResponse(
         token,
         resfreshToken.getToken(),
         userDetails.getId(),
         user.getRole().getName(),
         userDetails.getEmail(),
         user);
-        return jwtResponse;
 
 
     }
@@ -88,7 +87,12 @@ public class AuthMutation implements GraphQLMutationResolver {
                         "Refresh token is not in database!"));
     }
 
+    public Boolean logout(AuthLogoutInput input) {
+        logoutRepository.save(input.getAccessToken());
+        refreshTokenService.deleteByUserId(input.getUserId());
+        return true;
 
+    }
 
 
 }

@@ -7,3 +7,8 @@ input TokenRefreshRequest {
    refreshToken:String!
 }
 
+input AuthLogoutInput {
+    userId:ID!
+    accessToken:String!
+}
+
