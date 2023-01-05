@@ -40,6 +40,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private static final RequestMatcher PUBLIC_URLS = new OrRequestMatcher(
             new AntPathRequestMatcher("/graphql/**"),
+            new AntPathRequestMatcher("**/*.graphqls"),
             new AntPathRequestMatcher("/graphql"),
             new AntPathRequestMatcher("/storage/**"),
             new AntPathRequestMatcher("/swagger-ui/**"),

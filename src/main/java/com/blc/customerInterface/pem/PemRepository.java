@@ -8,5 +8,5 @@ import java.util.UUID;
 
 @Repository
 public interface PemRepository extends JpaRepository<Pem, UUID> {
-    Optional<Pem> findByName(String name);
+    //Optional<Pem> findByName(String name);
 }

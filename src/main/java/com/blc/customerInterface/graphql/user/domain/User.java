@@ -6,6 +6,8 @@ import com.blc.customerInterface.graphql.refreshToken.domain.RefreshToken;
 import com.blc.customerInterface.graphql.role.domain.Role;
 import com.blc.customerInterface.lib.dao.domain.BaseDomain;
 import com.blc.customerInterface.pem.Pem;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -18,6 +20,8 @@ import java.util.List;
 
 @Entity
 @Table(name = "user")
+@Builder
+@AllArgsConstructor
 public class User extends BaseDomain {
 
     private String name;
@@ -27,6 +31,10 @@ public class User extends BaseDomain {
     private Role role;
     private List<Instance> instances= new ArrayList<>();
     private List<Pem> pems = new ArrayList<>();
+
+    public User() {
+
+    }
 
     @Column(nullable = false)
     public String getName() {

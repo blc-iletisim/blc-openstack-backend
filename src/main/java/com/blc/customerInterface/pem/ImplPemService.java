@@ -41,8 +41,6 @@ public class ImplPemService implements PemService{
     @Autowired
     private UserRepo userRepository;
     @Autowired
-    private InstanceService instanceService;
-    @Autowired
     private PemRepository pemRepository;
     @Autowired
     private StorageService storageService;
@@ -149,7 +147,7 @@ public class ImplPemService implements PemService{
     }
 
 
-    private static KeyPair generateRSAKeyPair() throws NoSuchAlgorithmException, NoSuchProviderException {
+    public static KeyPair generateRSAKeyPair() throws NoSuchAlgorithmException, NoSuchProviderException {
         KeyPairGenerator generator = KeyPairGenerator.getInstance("RSA", "BC");
         generator.initialize(KEY_SIZE);
 
@@ -158,7 +156,7 @@ public class ImplPemService implements PemService{
         return keyPair;
     }
 
-    private static void writePemFile(Key key, String description, File file)
+    public static void writePemFile(Key key, String description, File file)
             throws FileNotFoundException, IOException {
         PemFile pemFile = new PemFile(key, description);
         pemFile.write(file);

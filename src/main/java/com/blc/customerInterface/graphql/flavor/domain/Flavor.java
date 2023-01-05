@@ -2,6 +2,8 @@ package com.blc.customerInterface.graphql.flavor.domain;
 
 import com.blc.customerInterface.graphql.instance.domain.Instance;
 import com.blc.customerInterface.lib.dao.domain.BaseDomain;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -11,12 +13,18 @@ import java.util.Set;
 
 @Entity
 @Table(name = "flavor")
+@Builder
+@AllArgsConstructor
 public class Flavor extends BaseDomain {
     private String name;
     private int cpu_size;
     private int ram_size;
     private int root_disk;
     private List<Instance> instances = new ArrayList<>();
+
+    public Flavor() {
+
+    }
 
     @Column(nullable = false)
     public String getName() {

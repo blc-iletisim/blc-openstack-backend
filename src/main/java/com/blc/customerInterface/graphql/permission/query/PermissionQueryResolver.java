@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 
 @Component
 public class PermissionQueryResolver implements GraphQLQueryResolver {
+
     private final PermissionService permissionService;
 
     @Autowired

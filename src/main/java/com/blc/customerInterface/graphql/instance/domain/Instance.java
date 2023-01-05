@@ -6,6 +6,8 @@ import com.blc.customerInterface.graphql.image.domain.Image;
 import com.blc.customerInterface.graphql.user.domain.User;
 import com.blc.customerInterface.lib.dao.domain.BaseDomain;
 import com.blc.customerInterface.pem.Pem;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -15,6 +17,8 @@ import java.util.Set;
 
 @Entity
 @Table(name = "instance")
+@Builder
+@AllArgsConstructor
 public class Instance extends BaseDomain {
     //private static final long serialVersionUID = 1L;
     private String name;
@@ -24,6 +28,10 @@ public class Instance extends BaseDomain {
     private User user;
     private Image image;
     private Set<Category> categories= new HashSet<>();
+
+    public Instance() {
+
+    }
 
     @Column(nullable = false)
     public String getName() {

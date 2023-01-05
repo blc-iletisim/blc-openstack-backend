@@ -27,7 +27,7 @@ public class FlavorMutation implements GraphQLMutationResolver {
         this.flavorService = flavorService;
         this.flavorMapper = flavorMapper;
     }
-    @PreAuthorize("hasAuthority('"+ PermissionName.FLAVOR_CREATE +"')")
+   // @PreAuthorize("hasAuthority('"+ PermissionName.FLAVOR_CREATE +"')")
     public Flavor createFlavor(@Valid FlavorCreateInput input){
         return flavorService.save(flavorMapper.toEntity(input));
     }

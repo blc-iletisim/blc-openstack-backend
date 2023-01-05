@@ -7,6 +7,8 @@ import com.blc.customerInterface.graphql.permission.repo.criteria.spec.Permissio
 import com.blc.customerInterface.lib.dao.service.BaseService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 @Service

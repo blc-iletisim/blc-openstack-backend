@@ -4,11 +4,15 @@ package com.blc.customerInterface.graphql.auth.domain;
 
 import com.blc.customerInterface.graphql.user.domain.User;
 import com.blc.customerInterface.lib.dao.domain.BaseDomain;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
+@Builder
+@AllArgsConstructor
 public class JwtResponse extends BaseDomain {
     private String accessToken;
     private String refreshToken;

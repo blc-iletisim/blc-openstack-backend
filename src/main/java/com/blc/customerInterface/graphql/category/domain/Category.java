@@ -2,6 +2,8 @@ package com.blc.customerInterface.graphql.category.domain;
 
 import com.blc.customerInterface.graphql.instance.domain.Instance;
 import com.blc.customerInterface.lib.dao.domain.BaseDomain;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -11,9 +13,15 @@ import java.util.Set;
 
 @Entity
 @Table(name = "category")
+@Builder
+@AllArgsConstructor
 public class Category extends BaseDomain {
     private String name;
     private Set<Instance> instances= new HashSet<>();
+
+    public Category() {
+
+    }
 
     @Column(nullable = false)
     public String getName() {
