@@ -84,7 +84,7 @@ public class JwtTokenProvider implements Serializable {
     public boolean validateToken(String token){
         try {
             Jwts.parser().setSigningKey(APP_SECRET).setSigningKey(token);
-            return (!isTokenExpired(token) && !isTokenLogout(token));
+            return !(isTokenLogout(token) ||  isTokenExpired(token) );
         }catch (SignatureException e) {
             logger.error("Invalid JWT signature: {}", e.getMessage());
         } catch (MalformedJwtException e) {
