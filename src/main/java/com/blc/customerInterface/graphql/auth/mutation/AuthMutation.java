@@ -4,6 +4,9 @@ import com.blc.customerInterface.exception.CustomException;
 import com.blc.customerInterface.exception.TokenRefreshException;
 import com.blc.customerInterface.graphql.auth.domain.JwtResponse;
 import com.blc.customerInterface.graphql.auth.mutation.input.AuthLoginInput;
+import com.blc.customerInterface.graphql.auth.mutation.input.AuthLogoutInput;
+import com.blc.customerInterface.graphql.blackToken.domain.BlackToken;
+import com.blc.customerInterface.graphql.blackToken.repo.BlackTokenRepo;
 import com.blc.customerInterface.graphql.refreshToken.domain.RefreshToken;
 import com.blc.customerInterface.graphql.refreshToken.service.RefreshTokenService;
 import com.blc.customerInterface.graphql.user.domain.User;
@@ -22,10 +25,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 
 @Component
 @Validated
@@ -33,14 +32,17 @@ public class AuthMutation implements GraphQLMutationResolver {
 
     private final AuthenticationManager authenticationManager;
     private final UserRepo userRepo;
+
+    private final BlackTokenRepo blackTokenRepo;
     private final JwtTokenProvider jwtTokenProvider;
     private final RefreshTokenService refreshTokenService;
 
 
     @Autowired
-    public AuthMutation(AuthenticationManager authenticationManager, UserRepo userRepo, JwtTokenProvider jwtTokenProvider, RefreshTokenService refreshTokenService) {
+    public AuthMutation(AuthenticationManager authenticationManager, UserRepo userRepo, BlackTokenRepo blackTokenRepo, JwtTokenProvider jwtTokenProvider, RefreshTokenService refreshTokenService) {
         this.authenticationManager = authenticationManager;
         this.userRepo = userRepo;
+        this.blackTokenRepo = blackTokenRepo;
         this.jwtTokenProvider = jwtTokenProvider;
         this.refreshTokenService = refreshTokenService;
     }
@@ -88,7 +90,16 @@ public class AuthMutation implements GraphQLMutationResolver {
                         "Refresh token is not in database!"));
     }
 
-
-
+    public boolean logout(AuthLogoutInput input) {
+        try {
+            BlackToken blackToken = new BlackToken();
+            blackToken.setAccessToken(input.getAccessToken());
+            refreshTokenService.deleteByUserId(input.getUserId());
+            blackTokenRepo.save(blackToken);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 
 }
