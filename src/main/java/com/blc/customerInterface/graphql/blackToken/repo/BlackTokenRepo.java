@@ -9,7 +9,7 @@ import java.util.Optional;
 @Repository
 public interface BlackTokenRepo extends JpaRepository<BlackToken, Long> {
 
-    BlackToken findByAccessToken(String accessToken);
+    Optional<BlackToken> findByAccessToken(String accessToken);
 
 
 }

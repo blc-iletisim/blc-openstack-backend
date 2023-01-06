@@ -84,8 +84,7 @@ public class JwtTokenProvider implements Serializable {
     public boolean validateToken(String token){
         try {
             Jwts.parser().setSigningKey(APP_SECRET).setSigningKey(token);
-            boolean isTokenLogout = isTokenLogout(token);
-            return (!isTokenExpired(token) && !isTokenLogout);
+            return (!isTokenExpired(token) && !isTokenLogout(token));
         }catch (SignatureException e) {
             logger.error("Invalid JWT signature: {}", e.getMessage());
         } catch (MalformedJwtException e) {
@@ -107,12 +106,8 @@ public class JwtTokenProvider implements Serializable {
 
     private boolean isTokenLogout(String token) {
 
-        try {
-            BlackToken blackToken = blackTokenRepo.findByAccessToken(token);
-            return blackToken != null;
-        } catch (Exception e) {
-            return false;
-        }
+        Optional<BlackToken> blackToken = blackTokenRepo.findByAccessToken(token);
+        return blackToken.isPresent();
     }
 
     public UUID getUserIdFromJwt(String jwtToken) {
