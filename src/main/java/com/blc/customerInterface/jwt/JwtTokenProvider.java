@@ -1,5 +1,7 @@
 package com.blc.customerInterface.jwt;
 
+import com.blc.customerInterface.graphql.blackToken.domain.BlackToken;
+import com.blc.customerInterface.graphql.blackToken.repo.BlackTokenRepo;
 import com.blc.customerInterface.graphql.user.domain.User;
 import com.blc.customerInterface.graphql.user.repo.UserRepo;
 import graphql.kickstart.servlet.context.DefaultGraphQLServletContext;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Function;
 
@@ -25,6 +28,8 @@ public class JwtTokenProvider implements Serializable {
     private static final Logger logger = LoggerFactory.getLogger(JwtTokenProvider.class);
     private final UserRepo userRepo;
 
+    private final BlackTokenRepo blackTokenRepo;
+
     @Value("${security.jwt.token.secret-key}")
     private String APP_SECRET;
     @Value("${security.jwt.token.expires-in}")
@@ -32,8 +37,9 @@ public class JwtTokenProvider implements Serializable {
     @Autowired
     private JwtUserDetailsService jwtUserDetailsService;
 
-    public JwtTokenProvider(UserRepo userRepo) {
+    public JwtTokenProvider(UserRepo userRepo, BlackTokenRepo blackTokenRepo) {
         this.userRepo = userRepo;
+        this.blackTokenRepo = blackTokenRepo;
     }
 
     public String generateJwtAccessToken(Authentication authentication){
@@ -78,7 +84,8 @@ public class JwtTokenProvider implements Serializable {
     public boolean validateToken(String token){
         try {
             Jwts.parser().setSigningKey(APP_SECRET).setSigningKey(token);
-            return !isTokenExpired(token);
+            boolean isTokenLogout = isTokenLogout(token);
+            return (!isTokenExpired(token) && !isTokenLogout);
         }catch (SignatureException e) {
             logger.error("Invalid JWT signature: {}", e.getMessage());
         } catch (MalformedJwtException e) {
@@ -98,10 +105,19 @@ public class JwtTokenProvider implements Serializable {
         return expiration.before(new Date());
     }
 
+    private boolean isTokenLogout(String token) {
+
+        try {
+            BlackToken blackToken = blackTokenRepo.findByAccessToken(token);
+            return blackToken != null;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
     public UUID getUserIdFromJwt(String jwtToken) {
         Claims claim = Jwts.parser().setSigningKey(APP_SECRET).parseClaimsJws(jwtToken).getBody();
         return UUID.fromString(claim.get("id",String.class));
-
     }
 
     public UserDetails getUserDetailsFromJwt(String jwtToken){

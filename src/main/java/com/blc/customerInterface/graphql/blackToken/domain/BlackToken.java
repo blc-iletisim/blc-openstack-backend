@@ -10,7 +10,7 @@ public class BlackToken {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(nullable = false, length = 1000)
+    @Column(nullable = false, length = 1000,unique = true)
     private String accessToken;
 
     public BlackToken() {
@@ -35,4 +35,5 @@ public class BlackToken {
     public void setAccessToken(String accessToken) {
         this.accessToken = accessToken;
     }
+
 }
