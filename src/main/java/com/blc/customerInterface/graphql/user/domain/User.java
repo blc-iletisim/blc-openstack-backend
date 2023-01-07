@@ -45,7 +45,7 @@ public class User extends BaseDomain {
         this.name = name;
     }
 
-    @Column(nullable = false)
+    @Column(nullable = false,unique = true)
     public String getEmail() {
         return email;
     }
