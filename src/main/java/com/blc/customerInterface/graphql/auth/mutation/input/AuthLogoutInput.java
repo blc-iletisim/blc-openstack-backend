@@ -29,4 +29,5 @@ public class AuthLogoutInput {
     public void setUserId(UUID userId) {
         this.userId = userId;
     }
+
 }

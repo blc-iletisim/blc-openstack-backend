@@ -2,12 +2,12 @@ package com.blc.customerInterface.jwt;
 
 import com.blc.customerInterface.graphql.user.domain.User;
 import com.blc.customerInterface.graphql.user.repo.UserRepo;
+import com.blc.customerInterface.jwt.Logout.repo.LogoutTokenRepository;
 import graphql.kickstart.servlet.context.DefaultGraphQLServletContext;
 import graphql.schema.DataFetchingEnvironment;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -25,21 +25,28 @@ public class JwtTokenProvider implements Serializable {
     private static final Logger logger = LoggerFactory.getLogger(JwtTokenProvider.class);
     private final UserRepo userRepo;
 
+    private final LogoutTokenRepository logoutTokenRepository;
+
+    private final JwtUserDetailsService jwtUserDetailsService;
+
     @Value("${security.jwt.token.secret-key}")
     private String APP_SECRET;
     @Value("${security.jwt.token.expires-in}")
     private long EXPIRES_IN;
-    @Autowired
-    private JwtUserDetailsService jwtUserDetailsService;
 
-    public JwtTokenProvider(UserRepo userRepo) {
+
+
+    public JwtTokenProvider(UserRepo userRepo, LogoutTokenRepository logoutTokenRepository, JwtUserDetailsService jwtUserDetailsService) {
         this.userRepo = userRepo;
+        this.logoutTokenRepository = logoutTokenRepository;
+        this.jwtUserDetailsService = jwtUserDetailsService;
     }
 
     public String generateJwtAccessToken(Authentication authentication){
         JwtUserDetailsImpl userPrincipal = (JwtUserDetailsImpl) authentication.getPrincipal();
         Date expireDate = new Date(new Date().getTime()+EXPIRES_IN);
         User user=userRepo.findByEmail(userPrincipal.getEmail()).orElse(null);
+        assert user != null;
         return Jwts.builder()
                 .setSubject(userPrincipal.getUsername())
                 .setIssuedAt(new Date())
@@ -78,7 +85,7 @@ public class JwtTokenProvider implements Serializable {
     public boolean validateToken(String token){
         try {
             Jwts.parser().setSigningKey(APP_SECRET).setSigningKey(token);
-            return !isTokenExpired(token);
+            return !isTokenExpired(token) && !isTokenLogout(token);
         }catch (SignatureException e) {
             logger.error("Invalid JWT signature: {}", e.getMessage());
         } catch (MalformedJwtException e) {
@@ -98,6 +105,10 @@ public class JwtTokenProvider implements Serializable {
         return expiration.before(new Date());
     }
 
+    private boolean isTokenLogout(String token) {
+        return logoutTokenRepository.findByLogoutToken(token).isPresent();
+    }
+
     public UUID getUserIdFromJwt(String jwtToken) {
         Claims claim = Jwts.parser().setSigningKey(APP_SECRET).parseClaimsJws(jwtToken).getBody();
         return UUID.fromString(claim.get("id",String.class));
@@ -106,8 +117,7 @@ public class JwtTokenProvider implements Serializable {
 
     public UserDetails getUserDetailsFromJwt(String jwtToken){
         String username = getUserNameFromJwt(jwtToken);
-        UserDetails userDetails = jwtUserDetailsService.loadUserByUsername(username);
-        return userDetails;
+        return jwtUserDetailsService.loadUserByUsername(username);
     }
 
 
