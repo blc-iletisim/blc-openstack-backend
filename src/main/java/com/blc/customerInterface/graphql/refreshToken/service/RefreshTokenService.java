@@ -4,7 +4,6 @@ import com.blc.customerInterface.exception.TokenRefreshException;
 import com.blc.customerInterface.graphql.refreshToken.domain.RefreshToken;
 import com.blc.customerInterface.graphql.refreshToken.repo.RefreshTokenRepository;
 import com.blc.customerInterface.graphql.user.repo.UserRepo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -20,11 +19,15 @@ public class RefreshTokenService {
     private Long refreshTokenDurationMs;
 
 
-    @Autowired
-    private RefreshTokenRepository refreshTokenRepository;
+    private final RefreshTokenRepository refreshTokenRepository;
 
-    @Autowired
-    private UserRepo userRepo;
+
+    private final UserRepo userRepo;
+
+    public RefreshTokenService(RefreshTokenRepository refreshTokenRepository, UserRepo userRepo) {
+        this.refreshTokenRepository = refreshTokenRepository;
+        this.userRepo = userRepo;
+    }
 
     public Optional<RefreshToken> findByToken(String token) {
         return refreshTokenRepository.findByToken(token);
@@ -33,7 +36,7 @@ public class RefreshTokenService {
     public RefreshToken createRefreshToken(UUID userId) {
         RefreshToken refreshToken = new RefreshToken();
 
-        refreshToken.setUser(userRepo.findById(userId).get());
+        refreshToken.setUser(userRepo.findById(userId).orElseThrow(() -> new TokenRefreshException(userId.toString(), "User not found. Please login again")));
         refreshToken.setExpiryDate(Instant.now().plusSeconds(refreshTokenDurationMs+900000000));
         refreshToken.setToken(UUID.randomUUID().toString());
 
@@ -52,6 +55,6 @@ public class RefreshTokenService {
 
     @Transactional
     public int deleteByUserId(UUID userId) {
-        return refreshTokenRepository.deleteByUser(userRepo.findById(userId).get());
+        return refreshTokenRepository.deleteByUser(userRepo.findById(userId));
     }
 }

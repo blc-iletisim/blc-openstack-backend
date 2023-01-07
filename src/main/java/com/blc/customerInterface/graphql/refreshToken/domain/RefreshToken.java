@@ -6,6 +6,7 @@ import com.blc.customerInterface.lib.dao.domain.BaseDomain;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.util.Optional;
 
 @Entity(name = "refreshtoken")
 public class RefreshToken extends BaseDomain {
